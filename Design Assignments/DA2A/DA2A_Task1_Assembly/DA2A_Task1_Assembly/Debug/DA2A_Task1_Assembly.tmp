@@ -1,0 +1,35 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\Debug\DA2A_Task1_Assembly.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>DA2A_Task1_Assembly.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>DA2A_Task1_Assembly.map</FILE>
+  <FILE>DA2A_Task1_Assembly.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <L1><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>10</LINE></L1>
+  <Delay1><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>22</LINE></Delay1>
+  <Delay2><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>39</LINE></Delay2>
+  <Delay1a><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>24</LINE></Delay1a>
+  <Delay1b><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>26</LINE></Delay1b>
+  <Delay1c><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>28</LINE></Delay1c>
+  <Delay2a><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>41</LINE></Delay2a>
+  <Delay2b><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>43</LINE></Delay2b>
+  <Delay2c><FILE>C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm</FILE><LINE>45</LINE></Delay2c>
+ </LABELS>
+</ASSEMBLER_INFO>
