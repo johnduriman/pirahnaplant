@@ -14,3 +14,4 @@ Directory:
 
  pirahnaplant/Design Assignments/DA2A/
 Videos:
+ https://youtu.be/zaLzdGOSp7E
