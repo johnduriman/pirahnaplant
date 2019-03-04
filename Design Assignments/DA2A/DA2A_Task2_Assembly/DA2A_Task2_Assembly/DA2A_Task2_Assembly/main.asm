@@ -5,21 +5,21 @@
 
 .org 0
 	SBI DDRB, 2				;Make Port B.2 an output port
-	SBI DDRC, 0				;Make Port C as an input port
+	CBI DDRC, 1				;Make Port C.1 as an input port
 L1: 
-	SBIC PINC, 0			;Check if PINC is LOW, then skip next instruction
-	RJMP L1					;Loop to R1
-	CBI PORTB, 2			;Turn LED light on
-	CALL Delay1				;Apply Delay
 	SBI PORTB, 2			;Turn LED light off
+	SBIS PINC, 1			;Check if PORTC.1 is LOW, then skip next instruction
+	CALL LEDON				;Apply Delay and turn the light on
 
 	RJMP L1					;Repeat Loop
 
+LEDON:
+	CBI PORTB, 2			;Turn LED light on
 ;1.25s at 16 MHz
 Delay1:
-	LDI R19, 102			;R19 = 102
+	LDI R19, 200			;R19 = 102
 Delay1a:
-	LDI R20, 118			;R20 = 118
+	LDI R20, 171			;R20 = 118
 Delay1b:
 	LDI R21, 194			;R21 = 194
 Delay1c:

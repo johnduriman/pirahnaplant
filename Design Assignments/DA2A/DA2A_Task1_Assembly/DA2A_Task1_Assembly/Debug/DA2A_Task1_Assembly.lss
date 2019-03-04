@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm Sat Mar 02 20:03:57 2019
+AVRASM ver. 2.2.7  C:\Users\John\OneDrive\School\CPE 301\Git\Design Assignments\DA2A\DA2A_Task1_Assembly\DA2A_Task1_Assembly\main.asm Sun Mar 03 17:34:53 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
@@ -990,52 +990,50 @@ AVRASM ver. 2.2.7  C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task1_Assembly\DA2
                                  ; Author : John Duriman
                                  
                                  .org 0
-000000 ef0f                      	LDI R16, 0xFF			;R16 = 0b11111111
-000001 b904                      	OUT DDRB, R16			;Make Port B an output port
-                                 
+000000 9a22                      	SBI DDRB, 2				;Make Port B.2 an output port
                                  L1: 
-000002 e002                      	LDI R16, 0x02			;Put 0x02 on PORTB pins
-000003 b905                      	OUT PORTB, R16			;Turn LED light on
-000004 940e 000b                 	CALL Delay1				;Delay of .435 seconds which is 60% of .735
+000001 982a                      	CBI PORTB, 2			;Turn LED light on
+000002 940e 0008                 	CALL Delay1				;Delay of .435 seconds which is 60% of .735
                                  	
-000006 e000                      	LDI R16, 0x00			;Put 0x00 on PORTB pins
-000007 b905                      	OUT PORTB, R16			;Turn LED light off
-000008 940e 0015                 	CALL Delay2				;Delay of .30 seconds which is 40% of .735
+000004 9a2a                      	SBI PORTB, 2			;Turn LED light off
+000005 940e 0012                 	CALL Delay2				;Delay of .30 seconds which is 40% of .735
                                  
-00000a cff7                      	RJMP L1					;Repeat Loop
+000007 cff9                      	RJMP L1					;Repeat Loop
                                  
                                  ;435ms at 16 MHz
                                  Delay1:
-00000b e234                      	LDI R19, 36				;R19 = 36
+000008 e633                      	LDI R19, 99				;R19 = 99
                                  Delay1a:
-00000c e44f                      	LDI R20, 79				;R20 = 79
+000009 e744                      	LDI R20, 116			;R20 = 116
                                  Delay1b:
-00000d ed5d                      	LDI R21, 221			;R21 = 221
+00000a ec58                      	LDI R21, 200			;R21 = 200
                                  Delay1c:
-00000e 955a                      	DEC R21					;Decrement R21
-00000f f7f1                      	BRNE Delay1c			;If (R21 != 0) got to delay1c
-000010 954a                      	DEC R20					;Decrement R20
-000011 f7d9                      	BRNE Delay1b			;If (R20 != 0) got to delay1b
-000012 953a                      	DEC R19					;Decrement R19
-000013 f7c1                      	BRNE Delay1a			;If (R19 != 0) got to delay1a
-000014 9508                      	RET						;Return to caller
+00000b 955a                      	DEC R21					;Decrement R21
+00000c f7f1                      	BRNE Delay1c			;If (R21 != 0) got to delay1c
+00000d 954a                      	DEC R20					;Decrement R20
+00000e f7d9                      	BRNE Delay1b			;If (R20 != 0) got to delay1b
+00000f 953a                      	DEC R19					;Decrement R19
+000010 f7c1                      	BRNE Delay1a			;If (R19 != 0) got to delay1a
+000011 9508                      	RET						;Return to caller
                                  
                                  
                                  ;300ms at 16 MHz
                                  Delay2:
-000015 e139                      	LDI R19, 25				;R19 = 25
+000012 e436                      	LDI R19, 70				;R19 = 25
                                  Delay2a:
-000016 e54a                      	LDI R20, 90				;R20 = 90
+000013 e744                      	LDI R20, 116			;R20 = 194
                                  Delay2b:
-000017 eb52                      	LDI R21, 178			;R21 = 178
+000014 ec54                      	LDI R21, 196			;R21 = 152
                                  Delay2c:
-000018 955a                      	DEC R21					;Decrement R21
-000019 f7f1                      	BRNE Delay2c			;If (R21 != 0) got to delay2c
-00001a 954a                      	DEC R20					;Decrement R20
-00001b f7d9                      	BRNE Delay2b			;If (R20 != 0) got to delay2b
-00001c 953a                      	DEC R19					;Decrement R19
-00001d f7c1                      	BRNE Delay2a			;If (R19 != 0) got to delay2a
-00001e 9508                      	RET						;Return to caller
+000015 955a                      	DEC R21					;Decrement R21
+000016 f7f1                      	BRNE Delay2c			;If (R21 != 0) got to delay2c
+000017 954a                      	DEC R20					;Decrement R20
+000018 f7d9                      	BRNE Delay2b			;If (R20 != 0) got to delay2b
+000019 953a                      	DEC R19					;Decrement R19
+00001a f7c1                      	BRNE Delay2a			;If (R19 != 0) got to delay2a
+00001b 0000                      	nop
+00001c 9508                      	RET						;Return to caller
+                                 	
                                  
                                  
 
@@ -1057,10 +1055,10 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   6 r17:   0 r18:   0 r19:   4 r20:   4 
+r13:   0 r14:   0 r15:   0 r16:   0 r17:   0 r18:   0 r19:   4 r20:   4 
 r21:   4 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 4 out of 35 (11.4%)
+Registers used: 3 out of 35 (8.6%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
@@ -1068,26 +1066,26 @@ andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :   6 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   0 cbr   :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   1 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :   0 cpse  :   0 dec   :   6 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :   9 lds   :   0 lpm   :   0 lsl   :   0 
+ld    :   0 ldd   :   0 ldi   :   6 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   3 pop   :   0 
+neg   :   0 nop   :   1 or    :   0 ori   :   0 out   :   0 pop   :   0 
 push  :   0 rcall :   0 ret   :   2 reti  :   0 rjmp  :   1 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   2 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   0 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 7 out of 113 (6.2%)
+Instructions used: 9 out of 113 (8.0%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00003e     62      0     62   32768   0.2%
+[.cseg] 0x000000 0x00003a     58      0     58   32768   0.2%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

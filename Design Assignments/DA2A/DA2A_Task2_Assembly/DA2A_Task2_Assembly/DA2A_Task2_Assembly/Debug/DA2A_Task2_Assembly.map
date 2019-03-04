@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\John\Desktop\DA2A\DA2A_Task1\DA2A_Task2_Assembly\DA2A_Task2_Assembly\DA2A_Task2_Assembly\main.asm Sat Mar 02 22:22:03 2019
+AVRASM ver. 2.2.7  C:\Users\John\OneDrive\School\CPE 301\Git\Design Assignments\DA2A\DA2A_Task2_Assembly\DA2A_Task2_Assembly\DA2A_Task2_Assembly\main.asm Sun Mar 03 18:13:45 2019
 
 
 EQU  SIGNATURE_000 0000001e
@@ -696,7 +696,8 @@ EQU  TWIaddr      00000030
 EQU  SPMRaddr     00000032
 EQU  INT_VECTORS_SIZE 00000034
 CSEG L1           00000002
-CSEG Delay1       00000009
-CSEG Delay1a      0000000a
-CSEG Delay1b      0000000b
-CSEG Delay1c      0000000c
+CSEG LEDON        00000007
+CSEG Delay1       00000008
+CSEG Delay1a      00000009
+CSEG Delay1b      0000000a
+CSEG Delay1c      0000000b

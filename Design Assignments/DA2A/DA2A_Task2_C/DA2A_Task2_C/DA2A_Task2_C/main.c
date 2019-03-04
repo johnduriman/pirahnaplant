@@ -20,14 +20,11 @@ int main(void)
 		{
 			PORTB &= ~(1 << 2);		//Turns on LED
 			_delay_ms(1250);		//Delay of 1.25 seconds 
-
 		}
 		else
 		{
 			PORTB |= (1 << 2);		//Turns off LED
-
 		}
-		_delay_ms(29);			//dELAY OF .29 SECONDS WHICH IS 40% OF .735
     }
 	return 0;
 }
