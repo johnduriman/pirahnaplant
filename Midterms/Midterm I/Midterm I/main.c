@@ -25,22 +25,11 @@ int main(void)
 		while((ADCSRA & (1<<ADIF)) == 0);		//Wait for conversion to finish
 		ADCSRA |= (1<<ADIF);
 		
+		//Calculates temperature
 		a = ADCL;
 		a = a | (ADCH<<8);
 		a = (a/1024.0) * 5000/10;
 		a = (a * (9/5)) + 52;
-		
-		
-		/*
-		usart_send((a/100) + '0');
-		a = a % 100;
-		usart_send((a/10) + '0');
-		a = a % 10;
-		usart_send((a) + '0');
-		usart_send('\r');
-		
-		_delay_ms(1000);
-		*/
 		
 		//Sets the MODE for wifi settings (AP or station mode)
 		char setMODE[] = "AT+CWMODE=1\r\n";
@@ -80,8 +69,6 @@ int main(void)
 		
 		//Wait about 15 seconds
 		_delay_ms(15000);
-		
-		
     }
 }
 

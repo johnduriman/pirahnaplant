@@ -3,31 +3,31 @@ Midterm I.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         000000d4  00800100  00000c38  00000ccc  2**0
+  0 .data         000000d6  00800100  00000c38  00000ccc  2**0
                   CONTENTS, ALLOC, LOAD, DATA
   1 .text         00000c38  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000001  008001d4  008001d4  00000da0  2**0
+  2 .bss          00000001  008001d6  008001d6  00000da2  2**0
                   ALLOC
-  3 .comment      0000005c  00000000  00000000  00000da0  2**0
+  3 .comment      0000005c  00000000  00000000  00000da2  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000dfc  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000e00  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000040  00000000  00000000  00000e3c  2**0
+  5 .debug_aranges 00000040  00000000  00000000  00000e40  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000ab7  00000000  00000000  00000e7c  2**0
+  6 .debug_info   00000ab7  00000000  00000000  00000e80  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000769  00000000  00000000  00001933  2**0
+  7 .debug_abbrev 00000769  00000000  00000000  00001937  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000003d1  00000000  00000000  0000209c  2**0
+  8 .debug_line   000003d1  00000000  00000000  000020a0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000084  00000000  00000000  00002470  2**2
+  9 .debug_frame  00000084  00000000  00000000  00002474  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000417  00000000  00000000  000024f4  2**0
+ 10 .debug_str    00000417  00000000  00000000  000024f8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000002ee  00000000  00000000  0000290b  2**0
+ 11 .debug_loc    000002ee  00000000  00000000  0000290f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000030  00000000  00000000  00002bf9  2**0
+ 12 .debug_ranges 00000030  00000000  00000000  00002bfd  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -77,13 +77,13 @@ Disassembly of section .text:
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
   82:	0d 92       	st	X+, r0
-  84:	a4 3d       	cpi	r26, 0xD4	; 212
+  84:	a6 3d       	cpi	r26, 0xD6	; 214
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
 
 0000008a <__do_clear_bss>:
   8a:	21 e0       	ldi	r18, 0x01	; 1
-  8c:	a4 ed       	ldi	r26, 0xD4	; 212
+  8c:	a6 ed       	ldi	r26, 0xD6	; 214
   8e:	b1 e0       	ldi	r27, 0x01	; 1
   90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
 
@@ -91,7 +91,7 @@ Disassembly of section .text:
   92:	1d 92       	st	X+, r1
 
 00000094 <.do_clear_bss_start>:
-  94:	a5 3d       	cpi	r26, 0xD5	; 213
+  94:	a7 3d       	cpi	r26, 0xD7	; 215
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
   9a:	0e 94 7b 00 	call	0xf6	; 0xf6 <main>
@@ -196,7 +196,7 @@ int main(void)
   f8:	df 93       	push	r29
   fa:	cd b7       	in	r28, 0x3d	; 61
   fc:	de b7       	in	r29, 0x3e	; 62
-  fe:	ce 51       	subi	r28, 0x1E	; 30
+  fe:	c1 52       	subi	r28, 0x21	; 33
  100:	d1 40       	sbci	r29, 0x01	; 1
  102:	0f b6       	in	r0, 0x3f	; 63
  104:	f8 94       	cli
@@ -216,6 +216,7 @@ int main(void)
 		while((ADCSRA & (1<<ADIF)) == 0);		//Wait for conversion to finish
 		ADCSRA |= (1<<ADIF);
 		
+		//Calculates temperature
 		a = ADCL;
  118:	0f 2e       	mov	r0, r31
  11a:	f8 e7       	ldi	r31, 0x78	; 120
@@ -228,10 +229,10 @@ int main(void)
  126:	af 2e       	mov	r10, r31
  128:	b1 2c       	mov	r11, r1
  12a:	f0 2d       	mov	r31, r0
-		char sendThingSpeak[] = "AT+CIPSEND=80\r\n";
 		usart_print(sendThingSpeak);
-		_delay_ms(2000);
+		_delay_ms(1000);
 	
+		//Sends temperature value in a to thingspeak
 		char getThingSpeak[150];
 		snprintf(getThingSpeak, "GET https://api.thingspeak.com/update?api_key=GSP67HM68OPHYUQ9&field1=%d\r\n", a);
  12c:	0f 2e       	mov	r0, r31
@@ -264,17 +265,18 @@ int main(void)
  152:	80 61       	ori	r24, 0x10	; 16
  154:	80 83       	st	Z, r24
 		
+		//Calculates temperature
 		a = ADCL;
  156:	f4 01       	movw	r30, r8
  158:	80 81       	ld	r24, Z
- 15a:	80 93 d4 01 	sts	0x01D4, r24	; 0x8001d4 <__data_end>
+ 15a:	80 93 d6 01 	sts	0x01D6, r24	; 0x8001d6 <__data_end>
 		a = a | (ADCH<<8);
  15e:	f5 01       	movw	r30, r10
  160:	80 81       	ld	r24, Z
- 162:	80 91 d4 01 	lds	r24, 0x01D4	; 0x8001d4 <__data_end>
- 166:	80 93 d4 01 	sts	0x01D4, r24	; 0x8001d4 <__data_end>
+ 162:	80 91 d6 01 	lds	r24, 0x01D6	; 0x8001d6 <__data_end>
+ 166:	80 93 d6 01 	sts	0x01D6, r24	; 0x8001d6 <__data_end>
 		a = (a/1024.0) * 5000/10;
- 16a:	60 91 d4 01 	lds	r22, 0x01D4	; 0x8001d4 <__data_end>
+ 16a:	60 91 d6 01 	lds	r22, 0x01D6	; 0x8001d6 <__data_end>
  16e:	70 e0       	ldi	r23, 0x00	; 0
  170:	80 e0       	ldi	r24, 0x00	; 0
  172:	90 e0       	ldi	r25, 0x00	; 0
@@ -295,22 +297,19 @@ int main(void)
  196:	51 e4       	ldi	r21, 0x41	; 65
  198:	0e 94 86 01 	call	0x30c	; 0x30c <__divsf3>
  19c:	0e 94 f8 01 	call	0x3f0	; 0x3f0 <__fixunssfsi>
- 1a0:	60 93 d4 01 	sts	0x01D4, r22	; 0x8001d4 <__data_end>
+ 1a0:	60 93 d6 01 	sts	0x01D6, r22	; 0x8001d6 <__data_end>
 		a = (a * (9/5)) + 52;
- 1a4:	80 91 d4 01 	lds	r24, 0x01D4	; 0x8001d4 <__data_end>
+ 1a4:	80 91 d6 01 	lds	r24, 0x01D6	; 0x8001d6 <__data_end>
  1a8:	8c 5c       	subi	r24, 0xCC	; 204
- 1aa:	80 93 d4 01 	sts	0x01D4, r24	; 0x8001d4 <__data_end>
-		usart_send('\r');
+ 1aa:	80 93 d6 01 	sts	0x01D6, r24	; 0x8001d6 <__data_end>
 		
-		_delay_ms(1000);
-		*/
 		//Sets the MODE for wifi settings (AP or station mode)
 		char setMODE[] = "AT+CWMODE=1\r\n";
  1ae:	8e e0       	ldi	r24, 0x0E	; 14
  1b0:	eb e4       	ldi	r30, 0x4B	; 75
  1b2:	f1 e0       	ldi	r31, 0x01	; 1
  1b4:	de 01       	movw	r26, r28
- 1b6:	af 5e       	subi	r26, 0xEF	; 239
+ 1b6:	ac 5e       	subi	r26, 0xEC	; 236
  1b8:	be 4f       	sbci	r27, 0xFE	; 254
  1ba:	01 90       	ld	r0, Z+
  1bc:	0d 92       	st	X+, r0
@@ -318,7 +317,7 @@ int main(void)
  1c0:	e1 f7       	brne	.-8      	; 0x1ba <main+0xc4>
 		usart_print(setMODE);
  1c2:	ce 01       	movw	r24, r28
- 1c4:	8f 5e       	subi	r24, 0xEF	; 239
+ 1c4:	8c 5e       	subi	r24, 0xEC	; 236
  1c6:	9e 4f       	sbci	r25, 0xFE	; 254
  1c8:	0e 94 6c 00 	call	0xd8	; 0xd8 <usart_print>
 	#else
@@ -338,12 +337,14 @@ int main(void)
  1dc:	00 00       	nop
 		_delay_ms(1000);
 		
+		//Connects the ESP to wifi
+		//Will change password after this assignment
 		char setWIFI[] = "AT+CWJAP=\"John iPhone\",\"Whatnoway\"\r\n";
  1de:	85 e2       	ldi	r24, 0x25	; 37
  1e0:	e9 e5       	ldi	r30, 0x59	; 89
  1e2:	f1 e0       	ldi	r31, 0x01	; 1
  1e4:	de 01       	movw	r26, r28
- 1e6:	a0 54       	subi	r26, 0x40	; 64
+ 1e6:	ad 53       	subi	r26, 0x3D	; 61
  1e8:	bf 4f       	sbci	r27, 0xFF	; 255
  1ea:	01 90       	ld	r0, Z+
  1ec:	0d 92       	st	X+, r0
@@ -351,7 +352,7 @@ int main(void)
  1f0:	e1 f7       	brne	.-8      	; 0x1ea <main+0xf4>
 		usart_print(setWIFI);
  1f2:	ce 01       	movw	r24, r28
- 1f4:	80 54       	subi	r24, 0x40	; 64
+ 1f4:	8d 53       	subi	r24, 0x3D	; 61
  1f6:	9f 4f       	sbci	r25, 0xFF	; 255
  1f8:	0e 94 6c 00 	call	0xd8	; 0xd8 <usart_print>
  1fc:	8f ef       	ldi	r24, 0xFF	; 255
@@ -365,12 +366,13 @@ int main(void)
  20c:	00 00       	nop
 		_delay_ms(1000);
 
+		//Sets up the proper MUX settings
 		char setMUX[] = "AT+CIPMUX=0\r\n";
  20e:	8e e0       	ldi	r24, 0x0E	; 14
  210:	ee e7       	ldi	r30, 0x7E	; 126
  212:	f1 e0       	ldi	r31, 0x01	; 1
  214:	de 01       	movw	r26, r28
- 216:	ad 5f       	subi	r26, 0xFD	; 253
+ 216:	aa 5f       	subi	r26, 0xFA	; 250
  218:	be 4f       	sbci	r27, 0xFE	; 254
  21a:	01 90       	ld	r0, Z+
  21c:	0d 92       	st	X+, r0
@@ -378,7 +380,7 @@ int main(void)
  220:	e1 f7       	brne	.-8      	; 0x21a <main+0x124>
 		usart_print(setMUX);
  222:	ce 01       	movw	r24, r28
- 224:	8d 5f       	subi	r24, 0xFD	; 253
+ 224:	8a 5f       	subi	r24, 0xFA	; 250
  226:	9e 4f       	sbci	r25, 0xFE	; 254
  228:	0e 94 6c 00 	call	0xd8	; 0xd8 <usart_print>
  22c:	ff ef       	ldi	r31, 0xFF	; 255
@@ -392,8 +394,9 @@ int main(void)
  23c:	00 00       	nop
 		_delay_ms(1000);
 		
-		char initThingSpeak[] = "AT+CIPSTART=\"TCP\",\"184.106.153.149\",80\r\n" ;
- 23e:	89 e2       	ldi	r24, 0x29	; 41
+		//Connect to thingspeak website
+		char initThingSpeak[] = "AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80\r\n" ;
+ 23e:	8c e2       	ldi	r24, 0x2C	; 44
  240:	ec e8       	ldi	r30, 0x8C	; 140
  242:	f1 e0       	ldi	r31, 0x01	; 1
  244:	de 01       	movw	r26, r28
@@ -419,12 +422,13 @@ int main(void)
  26c:	00 00       	nop
 		_delay_ms(1000);
 	
+		//Sets up for the GET function with the amount of characters to be sent
 		char sendThingSpeak[] = "AT+CIPSEND=80\r\n";
  26e:	80 e1       	ldi	r24, 0x10	; 16
- 270:	e5 eb       	ldi	r30, 0xB5	; 181
+ 270:	e8 eb       	ldi	r30, 0xB8	; 184
  272:	f1 e0       	ldi	r31, 0x01	; 1
  274:	de 01       	movw	r26, r28
- 276:	ab 51       	subi	r26, 0x1B	; 27
+ 276:	a8 51       	subi	r26, 0x18	; 24
  278:	bf 4f       	sbci	r27, 0xFF	; 255
  27a:	01 90       	ld	r0, Z+
  27c:	0d 92       	st	X+, r0
@@ -432,23 +436,24 @@ int main(void)
  280:	e1 f7       	brne	.-8      	; 0x27a <main+0x184>
 		usart_print(sendThingSpeak);
  282:	ce 01       	movw	r24, r28
- 284:	8b 51       	subi	r24, 0x1B	; 27
+ 284:	88 51       	subi	r24, 0x18	; 24
  286:	9f 4f       	sbci	r25, 0xFF	; 255
  288:	0e 94 6c 00 	call	0xd8	; 0xd8 <usart_print>
  28c:	ff ef       	ldi	r31, 0xFF	; 255
- 28e:	27 ea       	ldi	r18, 0xA7	; 167
- 290:	31 e6       	ldi	r19, 0x61	; 97
+ 28e:	23 ed       	ldi	r18, 0xD3	; 211
+ 290:	30 e3       	ldi	r19, 0x30	; 48
  292:	f1 50       	subi	r31, 0x01	; 1
  294:	20 40       	sbci	r18, 0x00	; 0
  296:	30 40       	sbci	r19, 0x00	; 0
  298:	e1 f7       	brne	.-8      	; 0x292 <main+0x19c>
  29a:	00 c0       	rjmp	.+0      	; 0x29c <main+0x1a6>
  29c:	00 00       	nop
-		_delay_ms(2000);
+		_delay_ms(1000);
 	
+		//Sends temperature value in a to thingspeak
 		char getThingSpeak[150];
 		snprintf(getThingSpeak, "GET https://api.thingspeak.com/update?api_key=GSP67HM68OPHYUQ9&field1=%d\r\n", a);
- 29e:	80 91 d4 01 	lds	r24, 0x01D4	; 0x8001d4 <__data_end>
+ 29e:	80 91 d6 01 	lds	r24, 0x01D6	; 0x8001d6 <__data_end>
  2a2:	1f 92       	push	r1
  2a4:	8f 93       	push	r24
  2a6:	df 92       	push	r13
@@ -460,22 +465,23 @@ int main(void)
  2b2:	c7 01       	movw	r24, r14
  2b4:	0e 94 6c 00 	call	0xd8	; 0xd8 <usart_print>
  2b8:	8f ef       	ldi	r24, 0xFF	; 255
- 2ba:	93 e2       	ldi	r25, 0x23	; 35
- 2bc:	e4 ef       	ldi	r30, 0xF4	; 244
+ 2ba:	93 ed       	ldi	r25, 0xD3	; 211
+ 2bc:	e0 e3       	ldi	r30, 0x30	; 48
  2be:	81 50       	subi	r24, 0x01	; 1
  2c0:	90 40       	sbci	r25, 0x00	; 0
  2c2:	e0 40       	sbci	r30, 0x00	; 0
  2c4:	e1 f7       	brne	.-8      	; 0x2be <main+0x1c8>
  2c6:	00 c0       	rjmp	.+0      	; 0x2c8 <main+0x1d2>
  2c8:	00 00       	nop
-		_delay_ms(5000);
+		_delay_ms(1000);
 	
+		//End thing speak connection
 		char endThingSpeak[] = "AT+CIPCLOSE\r\n";
  2ca:	8e e0       	ldi	r24, 0x0E	; 14
- 2cc:	e5 ec       	ldi	r30, 0xC5	; 197
+ 2cc:	e8 ec       	ldi	r30, 0xC8	; 200
  2ce:	f1 e0       	ldi	r31, 0x01	; 1
  2d0:	de 01       	movw	r26, r28
- 2d2:	ab 50       	subi	r26, 0x0B	; 11
+ 2d2:	a8 50       	subi	r26, 0x08	; 8
  2d4:	bf 4f       	sbci	r27, 0xFF	; 255
  2d6:	01 90       	ld	r0, Z+
  2d8:	0d 92       	st	X+, r0
@@ -483,7 +489,7 @@ int main(void)
  2dc:	e1 f7       	brne	.-8      	; 0x2d6 <main+0x1e0>
 		usart_print(endThingSpeak);
  2de:	ce 01       	movw	r24, r28
- 2e0:	8b 50       	subi	r24, 0x0B	; 11
+ 2e0:	88 50       	subi	r24, 0x08	; 8
  2e2:	9f 4f       	sbci	r25, 0xFF	; 255
  2e4:	0e 94 6c 00 	call	0xd8	; 0xd8 <usart_print>
  2e8:	ff ef       	ldi	r31, 0xFF	; 255
@@ -497,9 +503,9 @@ int main(void)
  2f8:	d9 f7       	brne	.-10     	; 0x2f0 <main+0x1fa>
  2fa:	00 c0       	rjmp	.+0      	; 0x2fc <main+0x206>
  2fc:	00 00       	nop
+		
+		//Wait about 15 seconds
 		_delay_ms(15000);
-		
-		
     }
  2fe:	0f 90       	pop	r0
  300:	0f 90       	pop	r0
